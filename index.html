@@ -5,20 +5,21 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head> 
     <style>
         * {
             font-family: 'Roboto', sans-serif;
         }
+        input, select {
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
         body {
             padding: 0;
             margin: 0;
             background-color: rgb(255, 255, 201);
-        }
-        input {
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
         }
         .reader {
             width: 50%;
@@ -106,7 +107,7 @@
                 width: 80%;
             }
             .navbar_logo {
-                width: 200px;
+                width: 150px;
             }
             .start_scan_btn, .scan_again_btn {
                 width: 80%;
@@ -128,7 +129,7 @@
         <div class="form_container" id="form_container">
             <form id="student_details">
                 <span class="mySpan"><input type="text" class="input_field" id="student_id" placeholder="Student ID" pattern="[0-9]{8}" required></span>
-                <span class="mySpan" ></span><input style="width: 98.5%" type="text" class="input_field" id="student_name" placeholder="Student Name" required></span>
+                <span class="mySpan" ></span><input type="text" class="input_field" id="student_name" placeholder="Student Name" required></span>
                 <span class="mySpan"></span><button class="submitButton" type="submit">Generate</button></span>
             </form>
         </div>
