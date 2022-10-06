@@ -107,6 +107,17 @@
         #qr_name {
             text-align: center;
         }
+        #qrcode {
+            display: none;
+        }
+        .image {
+            display: none;
+        }
+        .result_container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
         @media only screen and (max-width: 1080px) {
             .reader {
                 width: 80%;
@@ -133,7 +144,7 @@
         </div>
         <div class="form_container" id="form_container">
             <form id="student_details">
-                <span class="mySpan"><input type="text" class="input_field" id="student_id" placeholder="Student ID" pattern="[0-9]{8}" required></span>
+                <span class="mySpan"><input type="text" class="input_field" id="student_id" placeholder="Student ID" pattern="[0-9]{5}" required></span>
                 <span class="mySpan" ></span><input type="text" class="input_field" id="student_name" placeholder="Student Name" required></span>
                 <span class="mySpan"></span><button class="submitButton" type="submit">Generate</button></span>
             </form>
@@ -142,10 +153,17 @@
         <div id="result_container">
             <div>
                 <span><div id="qrcode"></div></span>
-                <span><p id="qr_name"></p><br></span>
-                <span><p id="qr_id"></p></span>
+                <!-- <span><p id="qr_name"></p><br></span>
+                <span><p id="qr_id"></p></span> -->
             </div>
         </div> 
+
+        <img class="image" src="https://lh3.googleusercontent.com/CNPFkoT9hTWO9Timp7T5rohNC7NIhFLl9_TtcTv-J9LV3BRA7UL0zuskO_xcQuqYlIiSr6TUv1kbHkj-wtQaYFh4Jy55NL3cR9cY5MZ4IpI8snMIKpD_6u_LMwNEUIUCTBDz4zR3n0IsVGzxTTpH-P6u5ZgITpwczugNM9EgmSHY4Ycrzb6ghS7WkNz-2VyZeVekcIf74xrJyBOYIAHaZbUKKK7TqrdH2OST3kvE0Z4VtvLjp1Q2qu6Ex3COfbeuTiROBB45gIOVq6s0T06vwbFOILa-pwwNkgln-jaxI-icLTb3PADGMZiPSGK_o2KH5c5q6PXaNO7RJe-2UT91u6qjP9bepmAnWayGpDT24PXlymis_dpECpz_DS9c0SsYBS-7DjGRzzG4Lr1ADoseCzR-b4KeomtEYauyFAp2qwCSM0UsWZnkfZn0lFXcZj0S-i69IOFtZMkBWFayo8xtu5b3NdUdrJjWQ63fs59LU-RhUCWInW26KnQX5bADsIjlj3NTPKmkzMfW227Z6eeKuyE4r0pSMzKgBgyjgpcKsupLslT2fSOpENyOUGZJt7W8ARwuOuvx-7-PQ-OBH3iLl6Sq9STjmLC3we8Gqv8HDPAcHdPu6JXVX9PThrFzP1UqSo4h2VK8a6OiPEpfxB59m9gAb6Y-a1nwuN-8Mp4EIfNGh8_KnXHB8kyG_FxaVoAKfz-cEy_ACvrMeuyhW1MCZwKUE0Z_SbWPj2Xosa03V7rSzUm1yKvbLJhNJ50_DKsa2vjQwSltexLNTjm4mowwCa5KxP4WQpnaAlWctzFkKzd8dJE1h6ogaHKtmiJwE_Q0Cz4Cbp_VpXOV8-hsdYlX0diNPuZzbcRfy3CPjB1LnuKbRVYvqFRYzjw_G2Ce7SUfijnhXMlcD7AkCTfPjC1qItiArHDBaPZM2t6N_09YZ6PxPuEStq8ueLLzQY2pl9TtUhtS6TR475W448g3W_jaT8XToP1Rm-gd54nCDdbtF_Ha9yw=w335-h947-no?authuser=1"/>
+
+        <div class="result_container">
+            <canvas class="result"></canvas>
+        </div>
+       
        
         <script type="text/javascript">
             const form = document.getElementById('student_details');
@@ -155,12 +173,28 @@
                 // document.getElementById('result_container').style.display = 'flex';
                 
                 document.getElementById("qrcode").innerHTML = "";
-                new QRCode(document.getElementById("qrcode"), document.getElementById("student_id").value);
-                document.getElementById("qr_name").innerHTML = document.getElementById("student_id").value + " " + document.getElementById("student_name").value
+                // new QRCode(document.getElementById("qrcode"), document.getElementById("student_id").value);
+                var qrcode = new QRCode(document.getElementById("qrcode"), {
+                    text: document.getElementById("student_id").value,
+                    width: 165,
+                    height: 165,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+                // document.getElementById("qr_name").innerHTML = document.getElementById("student_id").value + " " + document.getElementById("student_name").value
                 document.getElementById("student_id").value = ""
                 document.getElementById("student_name").value = ""
                
-                    
+                let imgEle1 = document.querySelectorAll(".image")[0];
+                let imgEle2 = document.getElementById("qrcode").firstChild;
+                let resEle = document.querySelector(".result");
+                var context = resEle.getContext("2d");
+                resEle.width = imgEle1.width;
+                resEle.height = imgEle1.height;
+                context.globalAlpha = 1.0;
+                context.drawImage(imgEle1, 0, 0);
+                context.drawImage(imgEle2, 85, 587);
             })
         </script>
         <script>
